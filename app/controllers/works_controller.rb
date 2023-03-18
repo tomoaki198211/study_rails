@@ -1,5 +1,5 @@
 class WorksController < ApplicationController
-  before_action :set_work, only: %w(show edit destroy)
+  before_action :set_work, only: %w(show edit update destroy)
 
   def index
     @works = Work.all
@@ -10,7 +10,8 @@ class WorksController < ApplicationController
   end
 
   def create
-    if @work.create(work_params)
+    @work = current_user.works.build(work_params)
+    if @work.save
       redirect_to works_path, notice:"登録しました"
     else
       render :new
@@ -21,11 +22,10 @@ class WorksController < ApplicationController
   end
 
   def edit
-    # set_work
   end
 
   def update
-    if @task.update(work_params)
+    if @work.update(work_params)
       redirect_to works_path, notice:"更新しました"
     else
       render :edit
@@ -33,17 +33,19 @@ class WorksController < ApplicationController
   end
 
   def destroy
+    if @work.destroy
+      redirect_to works_path, notice:"削除しました"
+    end
   end
 
   private
 
   def set_work
-    @work = Work.find_by(params[:id])
+    @work = Work.find(params[:id])
   end
 
   def work_params
     params.require(:work).permit(:title,:content)
   end
-
 
 end

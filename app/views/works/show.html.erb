@@ -1,0 +1,8 @@
+<div class="py-4">
+  <h1 class="text-2xl font-bold mb-4"><%= @work.title %></h1>
+  <p><%= @work.content %></p>
+  <div class="mt-4">
+    <%= link_to "Edit", edit_work_path(@work), class: "inline-block bg-blue-500 text-white rounded-md px-4 py-2 hover:bg-blue-600 transition duration-300 mr-2" %>
+    <%= link_to "Delete", work_path(@work), method: :delete, data: { confirm: "Are you sure?" }, class: "inline-block bg-red-500 text-white rounded-md px-4 py-2 hover:bg-red-600 transition duration-300" %>
+  </div>
+</div>
